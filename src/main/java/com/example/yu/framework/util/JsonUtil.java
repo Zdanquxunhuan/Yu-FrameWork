@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 /**
  * JSON 工具类
  *
+ * 将异常尽早处理并打印详细日志，方便后期查问题。和增加代码易读性
+ *
  * @author wukong
  * @since 2017-07-09.
  */
