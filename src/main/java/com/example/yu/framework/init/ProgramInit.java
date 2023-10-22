@@ -13,7 +13,7 @@ import com.example.yu.framework.util.ClassUtil;
  */
 public final class ProgramInit {
 
-    public static void init() {
+    public static void doInit() {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
