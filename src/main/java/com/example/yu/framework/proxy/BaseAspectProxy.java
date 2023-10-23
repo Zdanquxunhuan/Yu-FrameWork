@@ -42,25 +42,25 @@ public abstract class BaseAspectProxy implements Proxy {
         return result;
     }
 
-    private void error(Class<?> targetClass, Method method, Object[] params, Exception e) {
+    public void error(Class<?> targetClass, Method method, Object[] params, Exception e) {
 
     }
 
-    private void after(Class<?> targetClass, Method method, Object[] params) throws Throwable {
+    public void after(Class<?> targetClass, Method method, Object[] params) throws Throwable {
 
     }
 
-    private void before(Class<?> targetClass, Method method, Object[] params) throws Throwable {
+    public void before(Class<?> targetClass, Method method, Object[] params) throws Throwable {
 
     }
 
-    private boolean intercept(Class<?> targetClass, Method method, Object[] params) throws Throwable {
+    public boolean intercept(Class<?> targetClass, Method method, Object[] params) throws Throwable {
         return true;
     }
 
-    private void end() {
+    public void end() {
     }
 
-    private void begin() {
+    public void begin() {
     }
 }

@@ -1,11 +1,9 @@
 package com.example.yu.framework.helper;
 
-import com.example.yu.framework.annotation.YuComponent;
-import com.example.yu.framework.annotation.YuConfiguration;
-import com.example.yu.framework.annotation.YuController;
-import com.example.yu.framework.annotation.YuService;
+import com.example.yu.framework.annotation.*;
 import com.example.yu.framework.util.ClassUtil;
 
+import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,7 +55,7 @@ public final class ClassHelper {
     /**
      * Get all YuComponent classes under the application package name
      */
-    public static Set<Class<?>> getYuComponentClassSet(){
+    public static Set<Class<?>> getYuComponentClassSet() {
         Set<Class<?>> yuComponents = new HashSet<>();
         for (Class<?> clazz : CLASS_SET) {
             if (clazz.isAnnotationPresent(YuComponent.class))
@@ -67,9 +65,37 @@ public final class ClassHelper {
     }
 
     /**
+     * Gets all subclasses (or implementation classes) of a parent class (or interface) under the application package name
+     */
+    public static Set<Class<?>> getClassSetBySuper(Class<?> superClass) {
+
+        Set<Class<?>> classSet = new HashSet<>();
+        for (Class<?> aClass : CLASS_SET) {
+            if (superClass.isAssignableFrom(aClass) && !superClass.equals(aClass)){
+                classSet.add(aClass);
+            }
+        }
+        return classSet;
+    }
+
+    /**
+     * Gets all classes with an annotation in the name of the application package
+     */
+    public static Set<Class<?>> getClassSetByAnnotation(Class<? extends Annotation> annotationClass){
+        Set<Class<?>> classSet = new HashSet<>();
+        for (Class<?> aClass : CLASS_SET) {
+            if(aClass.isAnnotationPresent(annotationClass)){
+                classSet.add(aClass);
+            }
+        }
+        return classSet;
+    }
+
+
+    /**
      * Get all YuConfiguration classes under the application package name
      */
-    public static Set<Class<?>> getYuConfigurationClassSet(){
+    public static Set<Class<?>> getYuConfigurationClassSet() {
         Set<Class<?>> yuConfigurations = new HashSet<>();
         for (Class<?> clazz : CLASS_SET) {
             if (clazz.isAnnotationPresent(YuConfiguration.class))
