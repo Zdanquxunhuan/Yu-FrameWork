@@ -15,7 +15,7 @@ public final class AopHelper {
 
         Set<Class<?>> targetClassSet = new HashSet<>();
         Class<? extends Annotation> annotation = yuAspect.value();
-        if (annotation != null) {
+        if (annotation != null && !annotation.equals(YuAspect.class)) {
             Set<Class<?>> classSetByAnnotation = ClassHelper.getClassSetByAnnotation(annotation);
             targetClassSet.addAll(classSetByAnnotation);
         }
