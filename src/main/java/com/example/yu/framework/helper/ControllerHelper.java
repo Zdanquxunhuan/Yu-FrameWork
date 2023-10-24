@@ -39,6 +39,12 @@ public final class ControllerHelper {
         }
     }
 
+    /**
+     * Get the corresponding processor
+     * @param requestMethod Request method
+     * @param requestPath Request path
+     * @return processor
+     */
     public static Handler getHandler(String requestMethod, String requestPath) {
         Request request = new Request(requestMethod, requestPath);
         return REQUEST_HANDLER.get(request);

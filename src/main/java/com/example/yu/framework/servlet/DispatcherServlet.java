@@ -1,6 +1,9 @@
 package com.example.yu.framework.servlet;
 
+import com.example.yu.framework.bean.Handler;
+import com.example.yu.framework.helper.BeanHelper;
 import com.example.yu.framework.helper.ConfigHelper;
+import com.example.yu.framework.helper.ControllerHelper;
 import com.example.yu.framework.init.ProgramInit;
 
 import javax.servlet.ServletConfig;
@@ -12,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * request forwarder
@@ -52,11 +58,11 @@ public class DispatcherServlet extends HttpServlet {
      *
      *
      *
-     * @param req   the {@link HttpServletRequest} object that
+     * @param request   the {@link HttpServletRequest} object that
      *                  contains the request the client made of
      *                  the servlet
      *
-     * @param resp  the {@link HttpServletResponse} object that
+     * @param response  the {@link HttpServletResponse} object that
      *                  contains the response the servlet returns
      *                  to the client
      *
@@ -64,7 +70,26 @@ public class DispatcherServlet extends HttpServlet {
      * @throws IOException
      */
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String requestMethod = request.getMethod().toLowerCase();
+        String requestPath = request.getPathInfo();
+
+        Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
+        if(handler!=null){
+            Class<?> controllerClass = handler.getControllerClass();
+            Object controllerBean = BeanHelper.getBean(controllerClass);
+
+            //get and create request Params
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            Enumeration<String> paramNames = request.getParameterNames();
+            while (paramNames.hasMoreElements()) {
+                String paramName = paramNames.nextElement();
+                String paramValue = request.getParameter(paramName);
+                paramMap.put(paramName,paramValue);
+            }
+
+
+        }
     }
 }
