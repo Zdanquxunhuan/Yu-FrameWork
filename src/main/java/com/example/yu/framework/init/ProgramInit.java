@@ -1,9 +1,6 @@
 package com.example.yu.framework.init;
 
-import com.example.yu.framework.helper.BeanHelper;
-import com.example.yu.framework.helper.ClassHelper;
-import com.example.yu.framework.helper.ControllerHelper;
-import com.example.yu.framework.helper.IocHelper;
+import com.example.yu.framework.helper.*;
 import com.example.yu.framework.util.ClassUtil;
 
 /**
@@ -17,6 +14,7 @@ public final class ProgramInit {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
+                AopHelper.class,
                 ControllerHelper.class,
                 IocHelper.class
         };
