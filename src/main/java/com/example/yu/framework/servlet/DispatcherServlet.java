@@ -41,13 +41,13 @@ public class DispatcherServlet extends HttpServlet {
         // 初始化相关 Helper 类
         ProgramInit.doInit();
         // 获取 ServletContext 对象（用于注册 Servlet）
-        ServletContext servletContext = servletConfig.getServletContext();
+//        ServletContext servletContext = servletConfig.getServletContext();
         // 注册处理 JSP 的 Servlet
-        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
-        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
-        // 注册处理静态资源的默认 Servlet
-        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
+//        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
+//        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
+//        // 注册处理静态资源的默认 Servlet
+//        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
+//        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
 
     /**
@@ -118,22 +118,7 @@ public class DispatcherServlet extends HttpServlet {
             Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
 
             // 处理 Action 方法返回值
-            if (result instanceof View) {
-                //
-                View view = (View) result;
-                String path = view.getPath();
-                if (StringUtil.isNotEmpty(path)) {
-                    if (path.startsWith("/")) {
-                        response.sendRedirect(request.getContextPath() + path);
-                    } else {
-                        Map<String, Object> model = view.getModel();
-                        for (Map.Entry<String, Object> entry : model.entrySet()) {
-                            request.setAttribute(entry.getKey(), entry.getValue());
-                        }
-                        request.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(request, response);
-                    }
-                }
-            } else if (result instanceof Data) {
+            if (result instanceof Data) {
                 //
                 Data data = (Data) result;
                 Object model = data.getModel();
@@ -147,6 +132,24 @@ public class DispatcherServlet extends HttpServlet {
                     writer.close();
                 }
             }
+
+//            if (result instanceof View) {
+//                //
+//                View view = (View) result;
+//                String path = view.getPath();
+//                if (StringUtil.isNotEmpty(path)) {
+//                    if (path.startsWith("/")) {
+//                        response.sendRedirect(request.getContextPath() + path);
+//                    } else {
+//                        Map<String, Object> model = view.getModel();
+//                        for (Map.Entry<String, Object> entry : model.entrySet()) {
+//                            request.setAttribute(entry.getKey(), entry.getValue());
+//                        }
+//                        request.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(request, response);
+//                    }
+//                }
+//            }
+
         }
     }
 }
